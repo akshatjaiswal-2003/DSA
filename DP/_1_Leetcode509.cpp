@@ -1,26 +1,55 @@
 // LeetCode 509 — Fibonacci Number
 
+## Buttom Up approach ##
 class Solution {
 public:
     int fib(int n) {
-        // Base cases (interviewer expects you to handle this cleanly)
-        if (n == 0) return 0;
-        if (n == 1) return 1;
+        // Agar n 0 ya 1 hai, to seedha return kar do
+        if(n == 0) return 0;
+        if(n == 1) return 1;
 
-        // prev2 holds F(n-2), prev1 holds F(n-1)
-        int prev2 = 0;
-        int prev1 = 1;
+        // DP array banate hain, jisme dp[i] store karega i-th Fibonacci number
+        vector<int> dp(n + 1, 0); // Initially saare elements 0 hai
+        dp[0] = 0; // Base case: F(0) = 0
+        dp[1] = 1; // Base case: F(1) = 1
 
-        // Loop from 2 to n computing the Fibonacci sequence iteratively
-        for (int i = 2; i <= n; i++) {
-            int curr = prev1 + prev2;  // F(n) = F(n-1) + F(n-2)
-
-            // Move the window forward:
-            prev2 = prev1;  // Now prev2 becomes old prev1
-            prev1 = curr;   // prev1 becomes the new Fibonacci number
+        // Loop lagate hain 2 se n tak, kyunki 0 aur 1 already fill kar diye
+        for(int i = 2; i <= n; i++){
+            // Recurrence relation: F(n) = F(n-1) + F(n-2)
+            dp[i] = dp[i - 1] + dp[i - 2];
+            // Yaha pe dp[i-1] aur dp[i-2] already calculate ho chuke hain
         }
 
-        // prev1 now stores F(n)
-        return prev1;
+        // Finally, dp[n] return kar do, jo ki n-th Fibonacci number hai
+        return dp[n];
+    }
+};
+
+## recursion + DP (memoization) approach ##
+
+class Solution {
+public:
+    // Memoization ke liye ek helper function banayenge
+    int fibHelper(int n, vector<int>& dp) {
+        // Base cases: agar n 0 ya 1 hai, directly return kar do
+        if(n == 0) return 0;
+        if(n == 1) return 1;
+
+        // Agar dp[n] pehle se calculate ho chuka hai, to use return karo
+        if(dp[n] != -1) return dp[n];
+
+        // Recursion: F(n) = F(n-1) + F(n-2)
+        dp[n] = fibHelper(n - 1, dp) + fibHelper(n - 2, dp);
+
+        // Calculated value return karo
+        return dp[n];
+    }
+
+    int fib(int n) {
+        // DP array banate hain -1 se initialize kiya kyunki abhi calculate kuch nahi hua
+        vector<int> dp(n + 1, -1);
+
+        // Helper function call karo aur result return karo
+        return fibHelper(n, dp);
     }
 };
