@@ -22,80 +22,106 @@ Copy code
 
 You (step-by-step):
 
-1.  
-   “Fibonacci is a classic sequence where each number depends on the previous two.”  
+1. “Fibonacci is a classic sequence where each number depends on the previous two.”
 
-2.  
-   “The most intuitive way is recursion — but that repeats a lot of work.”  
+2. “The most direct way is recursion — but it recomputes the same values again and again.”
 
-3.  
-   “So first, I’ll explain the brute force recursion to show I understand the mathematical definition.”
+3. “I will first explain the brute-force recursion to show understanding of the mathematical definition.”
 
-4.  
-   “Then I will optimize it using DP / iterative approach so the time complexity becomes linear.”
+4. “Then I will optimize it using Dynamic Programming (iterative approach) to bring time complexity down to linear.”
 
-5.  
-   “Finally, I will deliver clean, interview-level code.”
+5. “Finally, I will provide clean, optimized, interview-level code.”
 
 ---
 
 ## 3. 🔹 Brute Force Approach  
 ### **Idea**  
-Use the direct recursive definition.
+Use the recursive definition directly.
 
 ### ❗ Problem  
-This calculates the same values repeatedly → exponential blow-up.
+It recalculates the same subproblems → exponential time.
 
 ### **Time Complexity:** `O(2^n)`  
-### **Space Complexity:** `O(n)` (recursion stack)
+### **Space Complexity:** `O(n)` (recursion depth)
 
 ---
 
 ## 4. 🔹 Optimized Approach (Best for Interviews)
-### Approach: **Bottom-Up Iteration (Dynamic Programming)**  
-This is the most commonly accepted optimal method.
+### Approach: **Bottom-Up Iterative DP**
+- Fibonacci only depends on the **previous 2 values**.  
+- So instead of storing an entire DP array, we maintain just **two variables**.  
+- Build the answer from `0` to `n`.
 
 ### **Why it Works**
-- Fibonacci only depends on **last two numbers**  
-- So maintain only **two variables** → save memory  
-- Compute iteratively from `0 → n`  
+- Eliminates repeated computation  
+- Maintains constant memory  
+- Clean and efficient  
 
 ### **Time Complexity:** `O(n)`  
-### **Space Complexity:** `O(1)` (only two variables)
+### **Space Complexity:** `O(1)`
 
+---
 
-## 6. 🔹 Final Time & Space Complexity
+## 5. 🔹 Optimized C++ Code (Interview-Level with Heavy Comments)
+
+```cpp
+class Solution {
+public:
+    int fib(int n) {
+        // Direct base cases
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+
+        // prev2 = F(n-2), prev1 = F(n-1)
+        int prev2 = 0;
+        int prev1 = 1;
+
+        int curr = 0;
+
+        // Iteratively build the Fibonacci sequence
+        for (int i = 2; i <= n; i++) {
+            curr = prev1 + prev2;   // current Fibonacci number
+
+            // Shift values for next iteration
+            prev2 = prev1;
+            prev1 = curr;
+        }
+
+        return curr; // The final computed Fibonacci number
+    }
+};
+6. 🔹 Final Time & Space Complexity
 Approach	Time Complexity	Space Complexity
 Optimized Iterative	O(n)	O(1)
 
 7. 🔹 Extra: Pitfalls, Edge Cases & Tips to Impress the Interviewer
 ✅ Common Edge Cases
-n = 0 → output 0
+n = 0 → return 0
 
-n = 1 → output 1
+n = 1 → return 1
 
 ❗ Common Pitfalls
-Using recursion without memoization → TLE
+Using recursion without memoization → extremely slow
 
-Overflow in languages without long long (C++ OK for small n)
+Not handling base cases
 
-Not considering base cases
+Using formulas that may introduce floating-point errors
 
 🌟 How to Impress the Interviewer
-Mention that Fibonacci also has:
+Mention alternate methods:
 
-Memoization → O(n) time, O(n) space
+Memoization (Top-Down DP) → O(n) time, O(n) space
 
-Matrix exponentiation → O(log n)
+Matrix Exponentiation → O(log n) time
 
-Closed-form (Binet’s Formula) → inaccurate due to floating decimal errors
+Binet’s Formula → constant time but inaccurate
 
-State why you choose iterative DP:
+Explain why iterative DP is preferred:
 
-Fast
+Most readable
 
-Clean
+Efficient
 
-No large memory usage
+Minimal memory
 
-Ideal for interviews
+Perfect for interview settings
