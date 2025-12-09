@@ -1,8 +1,11 @@
 ✅ LeetCode 509 — Fibonacci Number (Hinglish Explanation)
-1. Problem Title + Short Summary
-Fibonacci Number
+# LeetCode 509 — Fibonacci Number (Hinglish Explanation)
 
-Tumhe n diya gaya hai. Tumko n-th Fibonacci number return karna hai.
+## 1. Problem Title + Short Summary
+
+### **Fibonacci Number**
+
+Tumhe `n` diya gaya hai. Tumko **n-th Fibonacci number** return karna hai.
 
 Fibonacci sequence:
 
@@ -10,103 +13,137 @@ F(0) = 0
 F(1) = 1
 F(n) = F(n-1) + F(n-2)
 
-2. Interview Me Kaise Explain Karna Hai (Story Style, Step-by-Step)
+yaml
+Copy code
 
-Interviewer ko aise explain karo:
+---
 
-Step 1: Intuition se shuru karo
+## 2. Interview Me Kaise Explain Karna Hai (Story Style, Step-by-Step)
+
+### **Step 1: Intuition se shuru karo**
 “Fibonacci ek aisa sequence hai jisme har number pichhle do numbers par depend karta hai.”
 
-Step 2: Pehle brute force socha jaata hai
+### **Step 2: Pehle brute force socha jaata hai**
 “Sabse pehle hum directly recursion lagate hain kyunki formula simple hai…”
 
-Step 3: Problem identify karo
+### **Step 3: Problem identify karo**
 “…but recursion bahut baar same values dubara calculate karta hai → isliye exponential time lagta hai.”
 
-Step 4: DP mindset dikhana important hai
+### **Step 4: DP mindset dikhana important hai**
 “To optimize karne ke liye hum ya to memoization use kar sakte hain, ya phir simple iterative DP.”
 
-Step 5: Best solution choose karna
-“Fibonacci sirf last 2 values pe depend karta hai, toh hume full DP array ki bhi zarurat nahi.
+### **Step 5: Best solution choose karna**
+“Fibonacci sirf last 2 values pe depend karta hai.  
+Isliye full DP array ki zarurat nahi.  
 Hum 2 variables use kar ke O(1) space me solve kar sakte hain.”
 
-Interviewer ko samajh aa jayega ki tumne recursive thinking → optimized DP thinking follow kiya.
+---
 
-3. Brute Force Approach (Pure Recursion)
+## 3. Brute Force Approach (Pure Recursion)
 
 Formula:
 
 F(n) = F(n-1) + F(n-2)
 
-Problem with brute force
+yaml
+Copy code
 
-Har call multiple baar same subproblem ko compute karta hai
+### **Problem with brute force**
+- Har call same subproblem ko multiple baar compute karta hai  
+- bahut slow ho jaata hai (exponential)
 
-Exponential slow ho jaata hai.
+### **Time Complexity:** ❌ `O(2^n)`  
+### **Space Complexity:** ❌ `O(n)` (recursion stack)
 
-Time Complexity:
+---
 
-❌ O(2^n)
+## 4. Optimized Approach — Iterative DP (O(1) Space)
 
-Space Complexity:
-
-❌ O(n) recursion stack
-
-4. Optimized Approach — Iterative DP (O(1) Space)
-
-Yaha hum sirf pichhle 2 numbers store karte hain:
+Hum sirf last 2 numbers store karte hain:
 
 prev2 = 0
 prev1 = 1
 
 for i = 2 to n:
-    curr = prev1 + prev2
-    shift values
+curr = prev1 + prev2
+prev2 = prev1
+prev1 = curr
 
-Why this works?
+csharp
+Copy code
 
-Because Fibonacci ko sirf last 2 values chahiye, full DP array ki zarurat nahi.
+### **Why it works?**
+- Fibonacci ko sirf last 2 values chahiye  
+- DP array ki zarurat nahi  
+- Space optimized
 
-Benefits
+### **Benefits**
+- Fast  
+- No recursion  
+- O(1) space  
 
-Fast
+---
 
-No recursion
+## 5. Interview-Level C++ Code (Heavy Comments + Clean)
 
-Minimal memory
+```cpp
+class Solution {
+public:
+    int fib(int n) {
+        // Base cases: clean handling
+        if (n == 0) return 0;
+        if (n == 1) return 1;
 
-5. Final Time & Space Complexity
-✅ Time: O(n)
+        // prev2 -> F(n-2), prev1 -> F(n-1)
+        int prev2 = 0;
+        int prev1 = 1;
 
-Single loop chalti hai.
+        // Iteratively calculate Fibonacci numbers
+        for (int i = 2; i <= n; i++) {
 
-✅ Space: O(1)
+            // Current Fibonacci number = sum of previous two
+            int curr = prev1 + prev2;
 
-Sirf 2-3 variables use hote hain.
+            // Shift the window forward
+            prev2 = prev1;
+            prev1 = curr;
+        }
 
-6. Extra Tips (Pitfalls, Edge Cases, Impress Points)
+        // prev1 holds F(n)
+        return prev1;
+    }
+};
+6. Final Time & Space Complexity
+Time Complexity: ✅ O(n)
+Ek hi loop chalti hai.
+
+Space Complexity: ✅ O(1)
+Sirf 2–3 variables use hote hain.
+
+7. Extra Tips (Pitfalls, Edge Cases, Impress Points)
 Common Pitfalls
+Base cases bhool jaana (0 & 1)
 
-Base cases bhool jaana (0 aur 1)
+Pure recursion se solve karna (slow)
 
-Pure recursion use kar dena (slow)
-
-DP array unnecessary bana dena (extra space)
+Unnecessary DP array banana (waste space)
 
 Edge Cases
-
-n = 0 → return 0
-
-n = 1 → return 1
-
+ini
+Copy code
+n = 0 -> 0
+n = 1 -> 1
 How to Impress the Interviewer
-
-Teen approaches mention karo:
+3 approaches ka flow batao:
 Recursion → Memoization → Iterative DP
 
-Batana ki Fibonacci ek classic example hai optimization mindset dikhane ka.
+Batana ki Fibonacci DP optimization ka classic example hai
 
-Clean, readable code likho + complexity clearly state karo.
+Clean code + neat complexity explanation
+
+yaml
+Copy code
+
 
 ---------------------------------------------------------------------------------------------------
 
