@@ -1,6 +1,6 @@
 // LeetCode 509 — Fibonacci Number
 
-## Buttom Up approach ##
+----------------------------------- Buttom Up approach -----------------------------------------------------
 class Solution {
 public:
     int fib(int n) {
@@ -26,6 +26,7 @@ public:
 };
 
 ## recursion + DP (memoization) approach ##
+--------------------------------- Recursion + DP (memoization) approach ---------------------------------------
 
 class Solution {
 public:
