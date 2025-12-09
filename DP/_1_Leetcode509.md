@@ -68,30 +68,30 @@ The same subproblems are recalculated → **exponential time**.
 
 - n = 1 → return 1
 
-    ❗ Common Pitfalls
+❗ Common Pitfalls
 
-Using recursive approach without memoization → very slow
+- Using recursive approach without memoization → very slow
 
-Missing base cases
+- Missing base cases
 
-Using formulas → may give floating-point inaccuracies
+- Using formulas → may give floating-point inaccuracies
 
 🌟 How to Impress the Interviewer
 
-Mention alternative methods:
+- Mention alternative methods:
 
-Memoization (Top-Down DP) → O(n) time, O(n) space
+- Memoization (Top-Down DP) → O(n) time, O(n) space
 
-Matrix Exponentiation → O(log n) time
+- Matrix Exponentiation → O(log n) time
 
-Binet’s Formula → constant time but inaccurate
+- Binet’s Formula → constant time but inaccurate
 
-Explain why iterative DP is ideal:
+- Explain why iterative DP is ideal:
 
-Readable
+- Readable
 
-Fast
+- Fast
 
-Low memory usage
+- Low memory usage
 
-Best practical solution
+- Best practical solution
