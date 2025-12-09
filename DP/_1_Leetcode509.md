@@ -59,6 +59,8 @@ The same subproblems are recalculated → **exponential time**.
 - Approach	Time Complexity	Space Complexity
 - Optimized Iterative	O(n)	O(1)
 
+---
+
 ## 7. 🔹 Extra: Pitfalls, Edge Cases & Tips to Impress the Interviewer
 ### ✅ Common Edge Cases
 
