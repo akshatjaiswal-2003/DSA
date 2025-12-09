@@ -63,40 +63,8 @@ This is the most commonly accepted optimal method.
 ### **Time Complexity:** `O(n)`  
 ### **Space Complexity:** `O(1)` (only two variables)
 
----
 
-## 5. 🔹 Interview-Level Optimized C++ Code (with heavy comments)
-
-```cpp
-class Solution {
-public:
-    int fib(int n) {
-        // Base cases directly returned
-        if (n == 0) return 0;
-        if (n == 1) return 1;
-
-        // prev2 -> F(n-2)
-        // prev1 -> F(n-1)
-        int prev2 = 0;
-        int prev1 = 1;
-
-        // curr -> F(i)
-        int curr = 0;
-
-        // Build the Fibonacci sequence from 2 to n
-        for (int i = 2; i <= n; i++) {
-            curr = prev1 + prev2;   // F(i) = F(i-1) + F(i-2)
-
-            // Shift the variables for the next iteration
-            prev2 = prev1;          // move F(i-1) to F(i-2)
-            prev1 = curr;           // move F(i)   to F(i-1)
-        }
-
-        // Final value is our answer
-        return curr;
-    }
-};
-6. 🔹 Final Time & Space Complexity
+## 6. 🔹 Final Time & Space Complexity
 Approach	Time Complexity	Space Complexity
 Optimized Iterative	O(n)	O(1)
 
