@@ -56,7 +56,7 @@ Same subproblems baar-baar compute hote hain → **exponential time** lagta hai.
 
 ---
 
-## 6. 🔹 Time & Space Complexity Summary
+## 5. 🔹 Time & Space Complexity Summary
 
 | Approach            | Time Complexity | Space Complexity |
 |--------------------|----------------|-----------------|
