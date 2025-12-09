@@ -61,37 +61,71 @@ The same subproblems are recalculated → **exponential time**.
 
 ---
 
-## 7. 🔹 Extra: Pitfalls, Edge Cases & Tips to Impress the Interviewer
-### ✅ Common Edge Cases
+---
 
-- n = 0 → return 0
+# ✅ LeetCode 509 — **Fibonacci Number**  
+**Difficulty: Easy**
 
-- n = 1 → return 1
+---
 
-❗ Common Pitfalls
+## 1. 🔹 Problem Title + Short Summary  
+**Fibonacci Number**  
+Aapko ek integer `n` diya gaya hai. Aapko **n-th Fibonacci number** return karna hai.
 
-- Using recursive approach without memoization → very slow
+- F(0) = 0  
+- F(1) = 1  
+- F(n) = F(n-1) + F(n-2)
 
-- Missing base cases
+---
 
-- Using formulas → may give floating-point inaccuracies
+## 2. 🔹 Interview Me Kaise Explain Karein (Story Style)
 
-🌟 How to Impress the Interviewer
+**Interviewer:** "Explain how you would compute the n-th Fibonacci number."
 
-- Mention alternative methods:
+**Aap (step-by-step):**
 
-- Memoization (Top-Down DP) → O(n) time, O(n) space
+1. “Fibonacci ek classic sequence hai jahan har number pichle do numbers par depend karta hai.”  
+2. “Sabse simple तरीका recursion hai — lekin woh same values baar-baar compute karta hai.”  
+3. “Main pehle brute-force recursion explain karunga taaki mathematical definition clear ho.”  
+4. “Fir main isko optimize karunga Dynamic Programming ka iterative tareeka use karke, jisse time linear ho jaata hai.”  
+5. “Aur end me main optimized, clean, interview-level code dunga.”
 
-- Matrix Exponentiation → O(log n) time
+---
 
-- Binet’s Formula → constant time but inaccurate
+## 3. 🔹 Brute Force Approach  
+### **Idea**  
+Directly mathematical formula follow karke recursion lagana.
 
-- Explain why iterative DP is ideal:
+### ❗ Problem  
+Same subproblems baar-baar compute hote hain → **exponential time** lagta hai.
 
-- Readable
+### **Time Complexity:** `O(2^n)`  
+### **Space Complexity:** `O(n)` (recursion depth ki wajah se)
 
-- Fast
+---
 
-- Low memory usage
+## 4. 🔹 Optimized Approach (Interview Me Best)  
+### **Approach: Bottom-Up Iterative DP**
+- Fibonacci sirf **last 2 values** par depend karta hai.  
+- Isliye poora DP array ki zarurat nahi.  
+- Bas do variables se kaam ho jaata hai.  
+- `0` se `n` tak answer build karte hain.
 
-- Best practical solution
+### **Why It Works**
+- Repetition remove ho jaati hai  
+- Constant memory use hoti hai  
+- Clean, fast, readable code — interviews ke liye perfect  
+
+### **Time Complexity:** `O(n)`  
+### **Space Complexity:** `O(1)`
+
+---
+
+## 6. 🔹 Time & Space Complexity Summary
+
+| Approach            | Time Complexity | Space Complexity |
+|--------------------|----------------|-----------------|
+| Optimized Iterative | O(n)           | O(1)            |
+
+---
+
