@@ -51,3 +51,37 @@ Hum sirf **do variables** use karte hain (`prev1` aur `prev2`), koi extra array 
 
 --- 
 
+# 🗣️ Interview Me Kaise Explain Karein (Story Style)
+
+**Interviewer:** *“Tell me how you will solve the House Robber problem.”*
+
+**Aap (step-by-step):**
+
+1. **“Problem simple lagti hai, but ek hidden constraint hai.”**  
+   Adjacent houses ko loot nahi sakte, warna alarm baj jayega.  
+   Isliye har house par mujhe **decision** lena hota hai — *loot karu ya skip karu?*
+
+2. **“Main har house ke liye 2 choices sochta hoon.”**
+
+   - **Agar main is house ko lootun:**  
+     Main previous (i-1) house ko nahi le sakta.  
+     Profit = `nums[i] + dp[i-2]`
+
+   - **Agar main house ko skip karun:**  
+     Main previous house ka best answer le leta hoon.  
+     Profit = `dp[i-1]`
+
+3. **“Har step ek choice ban jaati hai.”**  
+   Main bas ye decide karta hoon:
+
+    - dp[i] = max(nums[i] + dp[i-2], dp[i-1])
+
+
+4. **“DP kyu?”**  
+Kyunki har step ka best answer **previous 2 answers** par depend karta hai.
+
+5. **“Optimization bhi possible hai.”**  
+Puri DP array ki zarurat nahi.  
+Sirf 2 variables (previous + previous-to-previous) rakhkar solve ho jaata hai.
+
+6. **“Final output last house ka best profit hota hai.”**
