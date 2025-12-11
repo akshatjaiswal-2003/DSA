@@ -89,3 +89,62 @@ aur dono states ka maximum store karta hoon.”
 
 ---
 
+---
+
+## 🔹 3. Brute Force Approach
+**👉 Idea**
+
+- Brute force me hum har element par 2 choices try karte hain:
+
+- Pick the element (aur next operation alternate ho jayega)
+
+- Skip the element
+
+- Iska matlab hum pura power set explore kar rahe hote hain:
+
+- jitni subsequences ho sakti hain
+
+- un sabka alternating sum calculate karna
+
+- aur maximum sum return karna
+
+- Ye approach direct recursion se implement ki ja sakti hai.
+
+--- 
+
+❗ Problem (Why Brute Force Fails)
+
+Brute force me:
+
+- Bohot saare subproblems repeat hote hain
+
+- Same index + same state (add/subtract) baar-baar calculate hota hai
+
+- Is wajah se exponential time lagta hai
+
+Example:
+fun(i, state) ko hum kai baar alag paths se call kar dete hain.
+
+--- 
+
+⏳ Time Complexity
+O(2^n)
+
+
+- Har element par 2 choices → pick ya skip → total 2^n subsequences.
+
+---
+ 
+🧠 Space Complexity
+O(n)
+
+
+- Bas recursion stack depth hogi (worst case: n levels).
+
+---
+
+- 🔚 Summary Line (Interview Style)
+
+“Brute force me main har index par pick/skip dono try karta hoon,
+lekin isse subproblems repeat hote hain aur overall complexity O(2^n) ho jati hai.
+Isi ko optimize karne ke liye DP/memoization use karte hain.”
