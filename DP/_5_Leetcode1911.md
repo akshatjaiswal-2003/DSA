@@ -148,3 +148,85 @@ O(n)
 “Brute force me main har index par pick/skip dono try karta hoon,
 lekin isse subproblems repeat hote hain aur overall complexity O(2^n) ho jati hai.
 Isi ko optimize karne ke liye DP/memoization use karte hain.”
+
+---
+---
+---
+
+## 🔹 4. Optimized Approach (Interview Me Best)
+- Approach: Bottom-Up Iterative DP (with O(1) space)
+
+- Is problem me humare DP states sirf 2 cheezon par depend karte hain:
+
+- Even state → next picked element add hoga
+
+- Odd state → next picked element subtract hoga
+
+Aur dono state sirf next index par depend karte hain.
+Iska matlab poora DP array store karne ki zarurat nahi—
+sirf 2 variables maintain karna kaafi hai:
+
+- even = dp[i][0] (next add state)
+
+- odd = dp[i][1] (next subtract state)
+
+- Hum array ko peeche se aage traverse karke answer build karte hain.
+
+---
+
+- ⭐ Why It Works
+
+✔ Subproblems ko repeatedly calculate karna band ho jata hai
+✔ DP table maintain karne ki zarurat nahi — sirf 2 variables sufficient
+✔ Clean, fast, memory-efficient solution
+✔ Interviewers ko pasand aata hai kyunki logic crisp hota hai
+
+---
+
+- 🧠 State Transitions (Optimized Form)
+
+Assume hum index i par hai:
+
+- ➤ Even State (next operation = add)
+newEven = max(nums[i] + odd, even)
+
+- ➤ Odd State (next operation = subtract)
+newOdd = max(-nums[i] + even, odd)
+
+
+Fir update kar do:
+
+- even = newEven
+- odd  = newOdd
+
+---
+
+🏁 Final Answer
+
+- Hum start karte hain add operation se:
+
+answer = even
+
+---
+
+⏳ Time Complexity
+O(n)
+
+
+- Ek hi pass me complete computation ho jata hai.
+
+---
+
+💾 Space Complexity
+O(1)
+
+---
+
+Sirf 2 variables use hote hain → even & odd.
+
+- 📝 Interview Summary Line
+
+“DP array banane ki zarurat nahi.
+Har index par sirf 2 states update hoti hain — even (add) aur odd (subtract).
+Main bottom-up solve karta hoon, aur sirf O(1) space lagti hai.
+Final answer even state me hota hai.”
