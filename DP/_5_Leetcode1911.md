@@ -89,16 +89,3 @@ aur dono states ka maximum store karta hoon.”
 
 ---
 
-## 🔹 7. Bonus Greedy Logic (Interviewer impress hoga)
-
-- Agar array me kahin nums[i] > nums[i-1] hota hai, to difference ko add karna hamesha profitable hota hai.
-
-- Greedy formula:
-
-res = nums[0]
-for i in range(1, n):
-    if nums[i] > nums[i-1]:
-        res += nums[i] - nums[i-1]
-
-
-- Isse direct O(1) space me answer mil jata hai.
