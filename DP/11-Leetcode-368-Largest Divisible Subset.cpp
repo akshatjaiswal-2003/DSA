@@ -26,15 +26,13 @@ public:
         prev  -> last taken element (divisibility check ke liye)
                 -1 ka matlab abhi koi element nahi liya
     */
-    void generate(int idx,
-                  vector<int>& nums,
-                  vector<int>& result,
-                  vector<int>& temp,
-                  int prev) {
+    void generate(int idx,vector<int>& nums,vector<int>& result,vector<int>& temp,int prev) 
+    {
 
         // ---------------- BASE CASE ----------------
         // Agar array ke end tak pahunch gaye
-        if(idx >= nums.size()) {
+        if(idx >= nums.size()) 
+        {
 
             // Agar current subsequence (temp)
             // result se zyada badi hai
@@ -49,7 +47,8 @@ public:
         // nums[idx] ko tabhi le sakte hain jab:
         //   1) prev == -1  (pehla element hai)
         //   2) nums[idx] % prev == 0 (divisible condition)
-        if(prev == -1 || nums[idx] % prev == 0) {
+        if(prev == -1 || nums[idx] % prev == 0) 
+        {
 
             // nums[idx] ko current subsequence me add karo
             temp.push_back(nums[idx]);
@@ -68,7 +67,8 @@ public:
         generate(idx+1, nums, result, temp, prev);
     }
     
-    vector<int> largestDivisibleSubset(vector<int>& nums) {
+    vector<int> largestDivisibleSubset(vector<int>& nums)
+    {
 
         // Sorting is VERY IMPORTANT
         // Kyunki divisibility check tab meaningful hota hai
@@ -111,7 +111,8 @@ public:
 
 class Solution {
 public:
-    vector<int> largestDivisibleSubset(vector<int>& nums) {
+    vector<int> largestDivisibleSubset(vector<int>& nums)
+    {
 
         // Step-1: Sort the array
         // Kyunki divisible subset me agar a < b hai
@@ -144,18 +145,22 @@ public:
         // ------------------------------------------------
         // DP Calculation (Same as LIS)
         // ------------------------------------------------
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++)
+        {
 
             // i se pehle ke saare elements check karenge
-            for(int j = 0; j < i; j++) {
+            for(int j = 0; j < i; j++)
+            {
 
                 // Divisibility condition
                 // Agar nums[i] divisible hai nums[j] se
-                if(nums[i] % nums[j] == 0) {
+                if(nums[i] % nums[j] == 0)
+                {
 
                     // Check karo kya j ko include karke
                     // subset aur bada ban sakta hai
-                    if(t[i] < t[j] + 1) {
+                    if(t[i] < t[j] + 1)
+                    {
 
                         // Length update
                         t[i] = t[j] + 1;
@@ -165,7 +170,8 @@ public:
                     }
 
                     // Overall maximum length update
-                    if(t[i] > maxL) {
+                    if(t[i] > maxL)
+                    {
                         maxL = t[i];
                         last_chosen_index = i;
                     }
@@ -180,7 +186,8 @@ public:
         // prev_idx array ki help se
         vector<int> result;
 
-        while(last_chosen_index >= 0) {
+        while(last_chosen_index >= 0)
+        {
             result.push_back(nums[last_chosen_index]);
             last_chosen_index = prev_idx[last_chosen_index];
         }
