@@ -254,8 +254,8 @@ public:
 🧠 MOD (%) TRICK SAMJHO (VERY IMPORTANT)
 | Expression    | Meaning      |
 | ------------- | ------------ |
-| `i % 2`       | Current row  |
-| `(i + 1) % 2` | Previous row |
+|  i % 2        | Current row  |
+|  (i + 1) % 2  | Previous row |
 
 👉 Kyunki sirf 2 rows hain, hum unko alternately reuse kar rahe hain.
 
