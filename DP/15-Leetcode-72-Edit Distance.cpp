@@ -109,3 +109,138 @@ public:
 solve(m, n) represent karta hai minimum operations required to convert first m characters of s1 into first n characters of s2.
 Agar last characters same hote hain toh koi operation nahi lagta, warna insert, delete aur replace teen options try karke minimum lete hain.
 Memoization ki wajah se har state sirf ek baar compute hoti hai, isliye time complexity O(m*n) ho jaati hai."
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// Approach-2 : Recursion + Memoization (Top-Down DP)
+// Starting from i = 0, j = 0
+// Time Complexity  : O(m * n)
+// Space Complexity : O(m * n)
+
+/*
+    🔹 Problem: Edit Distance (Minimum Operations)
+
+    Allowed Operations:
+    1️⃣ Insert
+    2️⃣ Delete
+    3️⃣ Replace
+
+    Goal:
+    - s1 ko s2 me convert karna
+    - Minimum number of operations ke saath
+
+    Example:
+    s1 = "intention"
+    s2 = "execution"
+    Output = 5
+*/
+
+class Solution {
+public:
+
+    /*
+        🔹 DP Table
+        t[i][j] = minimum operations required to
+                  convert substring s1[i ... m-1]
+                  into substring s2[j ... n-1]
+    */
+    int t[501][501];
+
+    int m, n;   // length of s1 and s2 (global for easy access)
+
+    /*
+        🔹 Recursive Function: solve
+        i → current index in s1
+        j → current index in s2
+    */
+    int solve(string& s1, string& s2, int i, int j) {
+
+        // 🛑 BASE CASE-1
+        // Agar s1 completely traverse ho gaya
+        // toh s2 ke remaining characters INSERT karne padenge
+        if(i == m)
+            return n - j;
+
+        // 🛑 BASE CASE-2
+        // Agar s2 completely traverse ho gaya
+        // toh s1 ke remaining characters DELETE karne padenge
+        else if(j == n)
+            return m - i;
+
+        // 🔁 MEMOIZATION CHECK
+        // Agar state already solved hai
+        // toh direct answer return karo
+        if(t[i][j] != -1)
+            return t[i][j];
+
+        // ✅ CASE-1 : Current characters MATCH
+        // Koi operation required nahi
+        // Simply next indices pe move karo
+        if(s1[i] == s2[j])
+            return t[i][j] = solve(s1, s2, i+1, j+1);
+
+        // ❌ CASE-2 : Current characters DIFFERENT
+        else {
+
+            // 🔹 OPTION-1 : INSERT
+            // s2[j] ko s1 me insert karo
+            // j aage badhega
+            int insertC  = 1 + solve(s1, s2, i, j+1);
+
+            // 🔹 OPTION-2 : DELETE
+            // s1[i] ko delete karo
+            // i aage badhega
+            int deleteC  = 1 + solve(s1, s2, i+1, j);
+
+            // 🔹 OPTION-3 : REPLACE
+            // s1[i] ko s2[j] se replace karo
+            // dono i aur j aage badhenge
+            int replaceC = 1 + solve(s1, s2, i+1, j+1);
+
+            // 🔥 Minimum cost operation choose karo
+            return t[i][j] = min({insertC, deleteC, replaceC});
+        }
+    }
+
+    /*
+        🔹 Driver Function
+        - Length initialize karta hai
+        - DP table reset karta hai
+        - Final edit distance return karta hai
+    */
+    int minDistance(string s1, string s2) {
+
+        m = s1.length();
+        n = s2.length();
+
+        // 🔄 DP table initialize with -1
+        memset(t, -1, sizeof(t));
+
+        // 🔥 Start recursion from beginning (0,0)
+        return solve(s1, s2, 0, 0);
+    }
+};
+
+
+🔥 INTERVIEW ME AISE EXPLAIN KARNA
+
+"Is approach me solve(i, j) represent karta hai minimum operations needed to convert substring s1[i…] into s2[j…].
+Agar characters same hain toh bina cost ke next indices pe move karte hain.
+Agar different hain toh insert, delete aur replace ke teen options try karke minimum lete hain.
+Memoization ki wajah se har state sirf ek baar compute hoti hai, isliye time complexity O(m*n) ho jaati hai."
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+🧠 APPROACH-1 vs APPROACH-2 (INTERVIEW FAVORITE)
+
+| Feature     | Approach-1   | Approach-2   |
+| ----------- | ------------ | ------------ |
+| Start point | End (m, n)   | Start (0, 0) |
+| State       | Prefix       | Suffix       |
+| Base case   | m==0 or n==0 | i==m or j==n |
+| Logic       | Same         | Same         |
