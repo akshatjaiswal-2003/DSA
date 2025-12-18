@@ -244,3 +244,122 @@ Memoization ki wajah se har state sirf ek baar compute hoti hai, isliye time com
 | State       | Prefix       | Suffix       |
 | Base case   | m==0 or n==0 | i==m or j==n |
 | Logic       | Same         | Same         |
+
+
+-----------------------------------------------------------------------------------------------------------
+
+
+
+// Approach-3 : Bottom-Up Dynamic Programming (Derived from Approach-1)
+// Time Complexity  : O(m * n)
+// Space Complexity : O(m * n)
+
+/*
+    🔹 Problem: Edit Distance (Levenshtein Distance)
+
+    Allowed operations:
+    1️⃣ Insert
+    2️⃣ Delete
+    3️⃣ Replace
+
+    Goal:
+    - Convert string s1 into string s2
+    - Minimum number of operations ke saath
+
+    🔹 Key Idea:
+    Ye approach recursion + memoization ko
+    iterative (tabulation) form me convert karti hai.
+*/
+
+class Solution {
+public:
+
+    /*
+        🔹 Function: editDistance
+
+        t[i][j] = minimum number of operations required to
+                  convert first i characters of s1
+                  into first j characters of s2
+    */
+    int editDistance(string s1, string s2, int m, int n) {
+
+        // 🔹 DP table of size (m+1) x (n+1)
+        // Extra row & column empty string cases ke liye
+        vector<vector<int>> t(m+1, vector<int>(n+1));
+
+        // 🔄 STEP-1 : DP table fill karna (Bottom-Up)
+        for(int i = 0; i < m+1; i++) {
+            for(int j = 0; j < n+1; j++) {
+
+                // 🛑 BASE CASE
+                // Agar s1 empty hai (i == 0)
+                // toh s2 ke j characters INSERT karne padenge
+                // Agar s2 empty hai (j == 0)
+                // toh s1 ke i characters DELETE karne padenge
+                if(i == 0 || j == 0)
+                    t[i][j] = i + j;
+
+                // ✅ CASE-1 : Last characters MATCH
+                // Koi operation required nahi
+                // Diagonal value copy kar lo
+                else if(s1[i-1] == s2[j-1])
+                    t[i][j] = t[i-1][j-1];
+
+                // ❌ CASE-2 : Last characters DIFFERENT
+                else
+                    /*
+                        Teen operations possible:
+                        1️⃣ Insert  → t[i][j-1]
+                        2️⃣ Delete  → t[i-1][j]
+                        3️⃣ Replace → t[i-1][j-1]
+
+                        +1 current operation ke liye
+                        Minimum choose karo
+                    */
+                    t[i][j] = 1 + min({
+                                        t[i][j-1],     // insert
+                                        t[i-1][j],     // delete
+                                        t[i-1][j-1]    // replace
+                                      });
+            }
+        }
+
+        // 🔥 Final answer bottom-right cell me hota hai
+        return t[m][n];
+    }
+
+    /*
+        🔹 Driver Function
+        - Strings ki length nikalta hai
+        - editDistance function call karta hai
+    */
+    int minDistance(string s1, string s2) {
+
+        int m = s1.length();
+        int n = s2.length();
+
+        return editDistance(s1, s2, m, n);
+    }
+};
+
+
+
+
+🔥 INTERVIEW ME AISE EXPLAIN KARNA
+
+"Ye Edit Distance ka Bottom-Up DP solution hai.
+t[i][j] represent karta hai minimum operations required to convert first i characters of s1 into first j characters of s2.
+Agar characters same hain toh diagonal value copy hoti hai, warna insert, delete aur replace ke minimum ko choose karte hain.
+Final answer t[m][n] me hota hai."
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+⚖️ COMPARISON (ALL 3 EDIT DISTANCE APPROACHES)
+
+| Approach   | Type                     | Space  |
+| ---------- | ------------------------ | ------ |
+| Approach-1 | Recursion + Memo         | O(m*n) |
+| Approach-2 | Recursion + Memo (start) | O(m*n) |
+| Approach-3 | Bottom-Up DP             | O(m*n) |
