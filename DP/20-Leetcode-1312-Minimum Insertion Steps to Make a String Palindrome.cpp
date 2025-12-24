@@ -274,3 +274,142 @@ a palindrome, expanding the solution by substring length and handling matching a
 
 
 
+//======================================================
+// 🔹 APPROACH-3 : USING LCS CONCEPT
+//======================================================
+//
+// PROBLEM:
+// -----------------------------------------------------
+// Find the MINIMUM number of insertions required
+// to make a string PALINDROME.
+//
+//------------------------------------------------------
+// 💡 KEY OBSERVATION (MOST IMPORTANT):
+// -----------------------------------------------------
+// Minimum Insertions = Length of String - LPS
+//
+// Where,
+// LPS = Longest Palindromic Subsequence
+//
+//------------------------------------------------------
+// 💡 TRICK:
+// -----------------------------------------------------
+// LPS of a string =
+// LCS(string, reverse(string))
+//
+// Because:
+// A palindrome reads the same forward & backward
+//------------------------------------------------------
+//
+// So the plan is:
+// 1️⃣ Reverse the string
+// 2️⃣ Find LCS(original, reversed)
+// 3️⃣ Subtract LCS length from original length
+//
+//------------------------------------------------------
+// Time Complexity  : O(n²)
+// Space Complexity : O(n²)
+//======================================================
+
+class Solution {
+public:
+    
+    // DP table for memoization
+    // t[m][n] = LCS length for s1[0..m-1] and s2[0..n-1]
+    int t[501][501];
+    
+    //==================================================
+    // 🔹 LCS USING RECURSION + MEMOIZATION
+    //==================================================
+    int LCS(string& s1, string& s2, int m, int n) {
+
+        /*
+        --------------------------------------------------
+        BASE CASE:
+        --------------------------------------------------
+        If either string length becomes 0,
+        LCS length = 0
+        --------------------------------------------------
+        */
+        if(m == 0 || n == 0)
+            return t[m][n] = 0;
+
+        /*
+        --------------------------------------------------
+        MEMOIZATION CHECK
+        --------------------------------------------------
+        If already computed, reuse result
+        --------------------------------------------------
+        */
+        if(t[m][n] != -1)
+            return t[m][n];
+
+        /*
+        --------------------------------------------------
+        CASE-1: Characters MATCH
+        --------------------------------------------------
+        If last characters match,
+        include this character in LCS
+        --------------------------------------------------
+        */
+        if(s1[m-1] == s2[n-1])
+            return t[m][n] = 1 + LCS(s1, s2, m-1, n-1);
+
+        /*
+        --------------------------------------------------
+        CASE-2: Characters DO NOT MATCH
+        --------------------------------------------------
+        Take maximum of:
+        - Skipping last char of s1
+        - Skipping last char of s2
+        --------------------------------------------------
+        */
+        return t[m][n] = max(
+                                LCS(s1, s2, m, n-1),
+                                LCS(s1, s2, m-1, n)
+                             );
+    }
+    
+    //==================================================
+    // 🔹 DRIVER FUNCTION
+    //==================================================
+    int minInsertions(string s) {
+
+        int m = s.length();
+
+        // Initialize DP table
+        memset(t, -1, sizeof(t));
+
+        /*
+        --------------------------------------------------
+        Step-1: Reverse the string
+        --------------------------------------------------
+        */
+        string temp = s;
+        reverse(begin(temp), end(temp));
+
+        /*
+        --------------------------------------------------
+        Step-2: Find LCS between s and reversed(s)
+        This gives Longest Palindromic Subsequence (LPS)
+        --------------------------------------------------
+        */
+        int lcs_length = LCS(s, temp, m, m);
+
+        /*
+        --------------------------------------------------
+        Step-3: Minimum Insertions Formula
+        --------------------------------------------------
+        min insertions = total length - LPS length
+        --------------------------------------------------
+        */
+        return m - lcs_length;
+    }
+};
+
+
+
+🎯 INTERVIEW ONE-LINER
+
+Minimum insertions required to make a string palindrome equals the difference between string length and 
+its longest palindromic subsequence, which can be computed using LCS with the reversed string.
