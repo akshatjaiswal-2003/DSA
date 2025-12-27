@@ -202,7 +202,8 @@ public:
 // ------------------------------------------------------------
 class Solution {
 public:
-    long long maxBalancedSubsequenceSum(vector<int>& nums) {
+    long long maxBalancedSubsequenceSum(vector<int>& nums) 
+    {
         int n = nums.size();
 
         // map:
@@ -216,7 +217,8 @@ public:
         long long ans = INT_MIN;
         
         // Har element ko LIS-style process karenge
-        for(int i = 0; i < n; i++) {
+        for(int i = 0; i < n; i++) 
+        {
 
             // ----------------------------------------------------
             // STEP 1: current element ka "balance key" nikaalo
@@ -246,7 +248,8 @@ public:
             // ----------------------------------------------------
             // Agar it != mp.begin():
             //   iska matlab koi key <= current key exist karta hai
-            if(it != mp.begin()) {
+            if(it != mp.begin()) 
+            {
                 it--; // largest key <= current key
                 cur_ans += it->second; // previous best sum add karo
             }
@@ -271,7 +274,8 @@ public:
             //   toh woh hamesha cur_ans wali state ko prefer karega
             it = mp.upper_bound(key);
 
-            while(it != mp.end() && it->second <= cur_ans) {
+            while(it != mp.end() && it->second <= cur_ans) 
+            {
                 mp.erase(it++); // erase and move iterator safely
             }
 
@@ -284,3 +288,5 @@ public:
         return ans;
     }
 };
+
+
