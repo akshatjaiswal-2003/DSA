@@ -5,7 +5,8 @@
 
 class Solution {
 public:
-    int fib(int n) {
+    int fib(int n) 
+    {
         // Agar n 0 ya 1 hai, to directly return kar do
         // Kyunki F(0) = 0 aur F(1) = 1
         if(n <= 1) return n;
@@ -40,7 +41,8 @@ public:
 
 class Solution {
 public:
-    int fib(int n) {
+    int fib(int n) 
+    {
         // Agar n 0 ya 1 hai, to seedha return kar do
         if(n == 0) return 0;
         if(n == 1) return 1;
@@ -51,7 +53,8 @@ public:
         dp[1] = 1; // Base case: F(1) = 1
 
         // Loop lagate hain 2 se n tak, kyunki 0 aur 1 already fill kar diye
-        for(int i = 2; i <= n; i++){
+        for(int i = 2; i <= n; i++)
+        {
             // Recurrence relation: F(n) = F(n-1) + F(n-2)
             dp[i] = dp[i - 1] + dp[i - 2];
             // Yaha pe dp[i-1] aur dp[i-2] already calculate ho chuke hain
@@ -68,7 +71,8 @@ public:
 class Solution {
 public:
     // Memoization ke liye ek helper function banayenge
-    int fibHelper(int n, vector<int>& dp) {
+    int fibHelper(int n, vector<int>& dp) 
+    {
         // Base cases: agar n 0 ya 1 hai, directly return kar do
         if(n == 0) return 0;
         if(n == 1) return 1;
