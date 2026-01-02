@@ -44,77 +44,63 @@ public:
     //==================================================
     // 🔹 Recursive function
     //==================================================
-    int solve(int i, int j, string &s) {
+    int solve(int i, int j, string &s) 
+    {
+        // --------------------------------------------------
+        // BASE CASE:
+        // --------------------------------------------------
+        // If i >= j:
+        // - Empty string OR
+        // - Single character
 
-        /*
-        --------------------------------------------------
-        BASE CASE:
-        --------------------------------------------------
-        If i >= j:
-        - Empty string OR
-        - Single character
+        // Already a palindrome
+        // 👉 No insertion required
+        // --------------------------------------------------
+        if(i >= j) return 0;
+        // --------------------------------------------------
+        // MEMOIZATION CHECK:
+        // --------------------------------------------------
+        // If already computed, reuse result
+        // --------------------------------------------------
+        if(t[i][j] != -1) return t[i][j];
 
-        Already a palindrome
-        👉 No insertion required
-        --------------------------------------------------
-        */
-        if(i >= j)
-            return 0;
+        // --------------------------------------------------
+        // CASE-1: Characters MATCH
+        // --------------------------------------------------
+        // s[i] == s[j]
 
-        /*
-        --------------------------------------------------
-        MEMOIZATION CHECK:
-        --------------------------------------------------
-        If already computed, reuse result
-        --------------------------------------------------
-        */
-        if(t[i][j] != -1)
-            return t[i][j];
+        // Example:
+        // "a___a"
 
-        /*
-        --------------------------------------------------
-        CASE-1: Characters MATCH
-        --------------------------------------------------
-        s[i] == s[j]
+        // Ends already match → no insertion needed
+        // Just solve for inner substring
+        // --------------------------------------------------
+        if(s[i] == s[j]) return t[i][j] = solve(i+1, j-1, s);
 
-        Example:
-        "a___a"
+        // --------------------------------------------------
+        // CASE-2: Characters DO NOT MATCH
+        // --------------------------------------------------
+        // We have TWO choices:
 
-        Ends already match → no insertion needed
-        Just solve for inner substring
-        --------------------------------------------------
-        */
-        if(s[i] == s[j])
-            return t[i][j] = solve(i+1, j-1, s);
+        // 1️⃣ Insert s[i] after position j
+        //    → Now s[i] matches at both ends
+        //    → Solve (i, j-1)
 
-        /*
-        --------------------------------------------------
-        CASE-2: Characters DO NOT MATCH
-        --------------------------------------------------
-        We have TWO choices:
+        // 2️⃣ Insert s[j] before position i
+        //    → Now s[j] matches at both ends
+        //    → Solve (i+1, j)
 
-        1️⃣ Insert s[i] after position j
-           → Now s[i] matches at both ends
-           → Solve (i, j-1)
-
-        2️⃣ Insert s[j] before position i
-           → Now s[j] matches at both ends
-           → Solve (i+1, j)
-
-        Since insertion cost = 1
-        We take minimum of both options
-        --------------------------------------------------
-        */
-        return t[i][j] = 1 + min(
-                                    solve(i, j-1, s),
-                                    solve(i+1, j, s)
-                                  );
+        // Since insertion cost = 1
+        // We take minimum of both options
+        // --------------------------------------------------
+        return t[i][j] = 1 + min(solve(i, j-1, s),solve(i+1, j, s));
     }
 
     //==================================================
     // 🔹 Driver Function
     //==================================================
-    int minInsertions(string s) {
+    int minInsertions(string s) 
+    {
         int n = s.length();
 
         // Initialize DP table with -1
@@ -164,101 +150,85 @@ to make each substring palindromic, choosing the optimal insertion strategy when
 
 class Solution {
 public:
-    int minInsertions(string s) {
+    int minInsertions(string s) 
+    {
 
         int n = s.length();
 
-        /*
-        --------------------------------------------------
-        🔹 DP TABLE DEFINITION
-        --------------------------------------------------
-        dp[i][j] = Minimum insertions required to convert
-                   substring s[i..j] into a palindrome
+        // --------------------------------------------------
+        // 🔹 DP TABLE DEFINITION
+        // --------------------------------------------------
+        // dp[i][j] = Minimum insertions required to convert
+        //            substring s[i..j] into a palindrome
 
-        Size: n x n
-        --------------------------------------------------
-        */
+        // Size: n x n
+        // --------------------------------------------------
         vector<vector<int>> dp(n, vector<int>(n, 0));
 
-        /*
-        --------------------------------------------------
-        🔹 BASE CASE
-        --------------------------------------------------
-        Substrings of length 1 (i == j) are already
-        palindromes, so:
+        // --------------------------------------------------
+        // 🔹 BASE CASE
+        // --------------------------------------------------
+        // Substrings of length 1 (i == j) are already
+        // palindromes, so:
 
-        dp[i][i] = 0  (No insertions needed)
+        // dp[i][i] = 0  (No insertions needed)
 
-        👉 Already handled because dp is initialized to 0
-        --------------------------------------------------
-        */
+        // 👉 Already handled because dp is initialized to 0
+        // --------------------------------------------------
 
-        /*
-        --------------------------------------------------
-        🔹 LENGTH-BASED ITERATION (IMPORTANT)
-        --------------------------------------------------
-        We solve smaller substrings first, because
-        dp[i][j] depends on:
-            - dp[i+1][j]
-            - dp[i][j-1]
-            - dp[i+1][j-1]
+        // --------------------------------------------------
+        // 🔹 LENGTH-BASED ITERATION (IMPORTANT)
+        // --------------------------------------------------
+        // We solve smaller substrings first, because
+        // dp[i][j] depends on:
+        //     - dp[i+1][j]
+        //     - dp[i][j-1]
+        //     - dp[i+1][j-1]
 
-        So we iterate by increasing substring length L
-        --------------------------------------------------
-        */
-        for (int L = 2; L <= n; L++) {
+        // So we iterate by increasing substring length L
+        // --------------------------------------------------
+        for (int L = 2; L <= n; L++) 
+        {
 
             // Starting index of substring
-            for (int i = 0; i < n - L + 1; i++) {
+            for (int i = 0; i < n - L + 1; i++) 
+            {
 
                 // Ending index
                 int j = i + L - 1;
 
-                /*
-                ==========================================
-                CASE-1: Characters MATCH
-                ==========================================
-                If s[i] == s[j], then these two characters
-                can sit symmetrically in palindrome.
+                // ==========================================
+                // CASE-1: Characters MATCH
+                // ==========================================
+                // If s[i] == s[j], then these two characters
+                // can sit symmetrically in palindrome.
 
-                No extra insertion needed at ends.
-                Just solve for inner substring.
-                ==========================================
-                */
-                if (s[i] == s[j]) {
-                    dp[i][j] = dp[i + 1][j - 1];
-                }
+                // No extra insertion needed at ends.
+                // Just solve for inner substring.
+                // ==========================================
+                if (s[i] == s[j]) dp[i][j] = dp[i + 1][j - 1];
 
-                /*
-                ==========================================
-                CASE-2: Characters DO NOT MATCH
-                ==========================================
-                Two choices:
-                ------------------------------------------
-                1️⃣ Insert s[i] at the end → solve dp[i+1][j]
-                2️⃣ Insert s[j] at the beginning → solve dp[i][j-1]
+                // ==========================================
+                // CASE-2: Characters DO NOT MATCH
+                // ==========================================
+                // Two choices:
+                // ------------------------------------------
+                // 1️⃣ Insert s[i] at the end → solve dp[i+1][j]
+                // 2️⃣ Insert s[j] at the beginning → solve dp[i][j-1]
 
-                Since insertion cost = 1
-                We take minimum of both choices
-                ==========================================
-                */
-                else {
-                    dp[i][j] = 1 + min(
-                                        dp[i + 1][j],
-                                        dp[i][j - 1]
-                                      );
-                }
+                // Since insertion cost = 1
+                // We take minimum of both choices
+                // ==========================================
+                else dp[i][j] = 1 + min(dp[i + 1][j],dp[i][j - 1]);
             }
         }
 
-        /*
-        --------------------------------------------------
-        🔹 FINAL ANSWER
-        --------------------------------------------------
-        dp[0][n-1] gives minimum insertions required
-        to make the entire string a palindrome
-        --------------------------------------------------
-        */
+        // --------------------------------------------------
+        // 🔹 FINAL ANSWER
+        // --------------------------------------------------
+        // dp[0][n-1] gives minimum insertions required
+        // to make the entire string a palindrome
+        // --------------------------------------------------
         return dp[0][n - 1];
     }
 };
@@ -323,51 +293,37 @@ public:
     //==================================================
     int LCS(string& s1, string& s2, int m, int n) {
 
-        /*
-        --------------------------------------------------
-        BASE CASE:
-        --------------------------------------------------
-        If either string length becomes 0,
-        LCS length = 0
-        --------------------------------------------------
-        */
-        if(m == 0 || n == 0)
-            return t[m][n] = 0;
+        // --------------------------------------------------
+        // BASE CASE:
+        // --------------------------------------------------
+        // If either string length becomes 0,
+        // LCS length = 0
+        // --------------------------------------------------
+        if(m == 0 || n == 0) return t[m][n] = 0;
 
-        /*
-        --------------------------------------------------
-        MEMOIZATION CHECK
-        --------------------------------------------------
-        If already computed, reuse result
-        --------------------------------------------------
-        */
-        if(t[m][n] != -1)
-            return t[m][n];
+        // --------------------------------------------------
+        // MEMOIZATION CHECK
+        // --------------------------------------------------
+        // If already computed, reuse result
+        // --------------------------------------------------
+        if(t[m][n] != -1) return t[m][n];
 
-        /*
-        --------------------------------------------------
-        CASE-1: Characters MATCH
-        --------------------------------------------------
-        If last characters match,
-        include this character in LCS
-        --------------------------------------------------
-        */
-        if(s1[m-1] == s2[n-1])
-            return t[m][n] = 1 + LCS(s1, s2, m-1, n-1);
+        // --------------------------------------------------
+        // CASE-1: Characters MATCH
+        // --------------------------------------------------
+        // If last characters match,
+        // include this character in LCS
+        // --------------------------------------------------
+        if(s1[m-1] == s2[n-1]) return t[m][n] = 1 + LCS(s1, s2, m-1, n-1);
 
-        /*
-        --------------------------------------------------
-        CASE-2: Characters DO NOT MATCH
-        --------------------------------------------------
-        Take maximum of:
-        - Skipping last char of s1
-        - Skipping last char of s2
-        --------------------------------------------------
-        */
-        return t[m][n] = max(
-                                LCS(s1, s2, m, n-1),
-                                LCS(s1, s2, m-1, n)
-                             );
+        // --------------------------------------------------
+        // CASE-2: Characters DO NOT MATCH
+        // --------------------------------------------------
+        // Take maximum of:
+        // - Skipping last char of s1
+        // - Skipping last char of s2
+        // --------------------------------------------------
+        return t[m][n] = max(LCS(s1, s2, m, n-1),LCS(s1, s2, m-1, n));
     }
     
     //==================================================
@@ -380,29 +336,23 @@ public:
         // Initialize DP table
         memset(t, -1, sizeof(t));
 
-        /*
-        --------------------------------------------------
-        Step-1: Reverse the string
-        --------------------------------------------------
-        */
+        // --------------------------------------------------
+        // Step-1: Reverse the string
+        // --------------------------------------------------
         string temp = s;
         reverse(begin(temp), end(temp));
 
-        /*
-        --------------------------------------------------
-        Step-2: Find LCS between s and reversed(s)
-        This gives Longest Palindromic Subsequence (LPS)
-        --------------------------------------------------
-        */
+        // --------------------------------------------------
+        // Step-2: Find LCS between s and reversed(s)
+        // This gives Longest Palindromic Subsequence (LPS)
+        // --------------------------------------------------
         int lcs_length = LCS(s, temp, m, m);
 
-        /*
-        --------------------------------------------------
-        Step-3: Minimum Insertions Formula
-        --------------------------------------------------
-        min insertions = total length - LPS length
-        --------------------------------------------------
-        */
+        // --------------------------------------------------
+        // Step-3: Minimum Insertions Formula
+        // --------------------------------------------------
+        // min insertions = total length - LPS length
+        // --------------------------------------------------
         return m - lcs_length;
     }
 };
