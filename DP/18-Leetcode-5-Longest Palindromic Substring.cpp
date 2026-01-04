@@ -267,94 +267,79 @@ verify palindromes using a two-pointer technique, resulting in O(n³) time compl
 
 class Solution {
 public:
-    string longestPalindrome(string s) {
+    string longestPalindrome(string s) 
+    {
 
-        /*
-        =====================================================
-        🔹 STEP 1: Basic setup
-        =====================================================
-        */
+        // =====================================================
+        // 🔹 STEP 1: Basic setup
+        // =====================================================
 
         int n = s.length();
 
-        /*
-        DP Table:
-        t[i][j] = true  → substring s[i..j] is palindrome
-        t[i][j] = false → not a palindrome
+        // DP Table:
+        // t[i][j] = true  → substring s[i..j] is palindrome
+        // t[i][j] = false → not a palindrome
 
-        Size: n x n
-        Initially sab false
-        */
+        // Size: n x n
+        // Initially sab false
         vector<vector<bool>> t(n, vector<bool>(n, false));
 
-        /*
-        maxL  → length of longest palindrome found so far
-        start → starting index of that palindrome
-        */
+        // maxL  → length of longest palindrome found so far
+        // start → starting index of that palindrome
         int maxL = 1;   // Minimum palindrome length is 1
         int start = 0;
 
-        /*
-        =====================================================
-        🔹 STEP 2: Base Case (Length = 1)
-        =====================================================
-        */
+        // =====================================================
+        // 🔹 STEP 2: Base Case (Length = 1)
+        // =====================================================
 
-        /*
-        Har single character apne aap mein palindrome hota hai
-        Example: "a", "b", "c"
-        */
-        for(int i = 0; i < n; i++)
-            t[i][i] = true;
+        // Har single character apne aap mein palindrome hota hai
+        // Example: "a", "b", "c"
+        for(int i = 0; i < n; i++) t[i][i] = true;
 
-        /*
-        =====================================================
-        🔹 STEP 3: Build DP table for substrings of length ≥ 2
-        =====================================================
-        */
+        // =====================================================
+        // 🔹 STEP 3: Build DP table for substrings of length ≥ 2
+        // =====================================================
 
-        /*
-        L → current substring length
-        L = 2 se n tak grow karte hain
-        (Bottom-Up DP)
-        */
-        for(int L = 2; L <= n; L++) {
 
-            /*
-            i → starting index of substring
-            j → ending index = i + L - 1
-            */
-            for(int i = 0; i < n - L + 1; i++) {
+        // L → current substring length
+        // L = 2 se n tak grow karte hain
+        // (Bottom-Up DP)
+        for(int L = 2; L <= n; L++) 
+        {
+
+            // i → starting index of substring
+            // j → ending index = i + L - 1
+            for(int i = 0; i < n - L + 1; i++) 
+            {
 
                 int j = i + L - 1;
 
-                /*
-                =====================================================
-                🔹 Palindrome Condition
-                =====================================================
+                // =====================================================
+                // 🔹 Palindrome Condition
+                // =====================================================
 
-                A substring s[i..j] is palindrome if:
-                1) s[i] == s[j]
-                AND
-                2) Inner substring s[i+1..j-1] is palindrome
+                // A substring s[i..j] is palindrome if:
+                // 1) s[i] == s[j]
+                // AND
+                // 2) Inner substring s[i+1..j-1] is palindrome
 
-                BUT special case:
-                - If L == 2 (two characters)
-                  Then sirf s[i] == s[j] check karna kaafi hai
-                  (no inner substring exists)
-                */
+                // BUT special case:
+                // - If L == 2 (two characters)
+                //   Then sirf s[i] == s[j] check karna kaafi hai
+                //   (no inner substring exists)
 
-                if(s[i] == s[j] && (t[i+1][j-1] || L == 2)) {
+                if(s[i] == s[j] && (t[i+1][j-1] || L == 2)) 
+                {
 
                     // Mark substring s[i..j] as palindrome
                     t[i][j] = true;
 
-                    /*
-                    Agar current palindrome length
-                    pehle se zyada hai
-                    toh answer update karo
-                    */
-                    if(L > maxL) {
+                    // Agar current palindrome length
+                    // pehle se zyada hai
+                    // toh answer update karo
+                    if(L > maxL) 
+                    {
                         maxL = L;
                         start = i;
                     }
@@ -362,16 +347,12 @@ public:
             }
         }
 
-        /*
-        =====================================================
-        🔹 STEP 4: Result
-        =====================================================
-        */
+        // =====================================================
+        // 🔹 STEP 4: Result
+        // =====================================================
 
-        /*
-        start se maxL length ka substring
-        longest palindromic substring hoga
-        */
+        // start se maxL length ka substring
+        // longest palindromic substring hoga
         return s.substr(start, maxL);
     }
 };
@@ -380,4 +361,5 @@ public:
 
 🎯 INTERVIEW ONE-LINER
 
-“This solution uses bottom-up dynamic programming where t[i][j] stores whether substring s[i..j] is palindrome, allowing us to build longer palindromes from shorter ones in O(n²) time.”
+“This solution uses bottom-up dynamic programming where t[i][j] stores whether substring s[i..j] is palindrome, 
+allowing us to build longer palindromes from shorter ones in O(n²) time.”
