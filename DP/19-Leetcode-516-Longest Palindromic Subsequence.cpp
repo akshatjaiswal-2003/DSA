@@ -87,7 +87,8 @@ public:
     // ------------------------------------------------------
     // 🔹 MAIN FUNCTION
     // ------------------------------------------------------
-    int longestPalindromeSubseq(string s) {
+    int longestPalindromeSubseq(string s) 
+    {
 
         int m = s.length();
 
