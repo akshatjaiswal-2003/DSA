@@ -21,70 +21,56 @@
 class Solution {
 public:
 
-    /*
-    t[l][r] ka matlab:
-    -1 → abhi compute nahi hua
-     0 → s[l..r] palindrome nahi hai
-     1 → s[l..r] palindrome hai
-    */
+    // t[l][r] ka matlab:
+    // -1 → abhi compute nahi hua
+    //  0 → s[l..r] palindrome nahi hai
+    //  1 → s[l..r] palindrome hai
     int t[1001][1001];
     
-    /*
-    =====================================================
-    🔹 Recursive function: solve(l, r)
-    =====================================================
-    Ye function check karta hai:
-    "kya substring s[l..r] palindrome hai?"
-    */
-    bool solve(string &s, int l, int r){
+    // =====================================================
+    // 🔹 Recursive function: solve(l, r)
+    // =====================================================
+    // Ye function check karta hai:
+    // "kya substring s[l..r] palindrome hai?"
+    bool solve(string &s, int l, int r)
+    {
 
-        /*
-        🛑 BASE CASE
-        Agar l >= r ho gaya:
-        - Single character (l == r) → palindrome
-        - Empty substring (l > r) → palindrome
+        // 🛑 BASE CASE
+        // Agar l >= r ho gaya:
+        // - Single character (l == r) → palindrome
+        // - Empty substring (l > r) → palindrome
 
-        Example:
-        "a" , ""  → always palindrome
-        */
-        if(l >= r) 
-            return 1;
+        // Example:
+        // "a" , ""  → always palindrome
+        if(l >= r) return 1;
 
-        /*
-        🔹 MEMOIZATION CHECK
-        Agar pehle se answer nikal chuke hain
-        toh wahi return kar do
-        */
-        if(t[l][r] != -1){
-            return t[l][r];
-        }
+        // 🔹 MEMOIZATION CHECK
+        // Agar pehle se answer nikal chuke hain
+        // toh wahi return kar do
+        if(t[l][r] != -1) return t[l][r];
 
-        /*
-        🔹 MAIN LOGIC
-        Agar first aur last character same hain,
-        tabhi beech ka substring palindrome hona chahiye
-        */
-        if(s[l] == s[r]) {
+        // 🔹 MAIN LOGIC
+        // Agar first aur last character same hain,
+        // tabhi beech ka substring palindrome hona chahiye
+        if(s[l] == s[r]) 
+        {
 
             // Characters match → check inside substring
             return t[l][r] = solve(s, l+1, r-1);
         }
 
-        /*
-        Agar first aur last character different hain,
-        toh palindrome possible hi nahi
-        */
+        // Agar first aur last character different hain,
+        // toh palindrome possible hi nahi
         return t[l][r] = false;
     }
     
-    /*
-    =====================================================
-    🔹 Main function: longestPalindrome
-    =====================================================
-    Har possible substring generate karo
-    aur solve() se check karo
-    */
-    string longestPalindrome(string s) {
+    // =====================================================
+    // 🔹 Main function: longestPalindrome
+    // =====================================================
+    // Har possible substring generate karo
+    // aur solve() se check karo
+    string longestPalindrome(string s) 
+    {
 
         int n = s.length();
 
@@ -97,28 +83,26 @@ public:
         // DP table ko initialize karo
         memset(t, -1, sizeof(t));
 
-        /*
-        =====================================================
-        🔹 Generate all substrings
-        =====================================================
-        i → start index
-        j → end index
-        */
-        for(int i = 0; i < n; i++){
-            for(int j = i; j < n; j++){
+        // =====================================================
+        // 🔹 Generate all substrings
+        // =====================================================
+        // i → start index
+        // j → end index
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = i; j < n; j++)
+            {
                 
-                /*
-                Check:
-                s[i..j] palindrome hai ya nahi
-                */
-                if(solve(s, i, j)) {
+                // Check:
+                // s[i..j] palindrome hai ya nahi
+                if(solve(s, i, j)) 
+                {
 
-                    /*
-                    Agar palindrome hai
-                    aur length maxlen se zyada hai
-                    toh update karo
-                    */
-                    if(j - i + 1 > maxlen){
+                    // Agar palindrome hai
+                    // aur length maxlen se zyada hai
+                    // toh update karo
+                    if(j - i + 1 > maxlen)
+                    {
                         startingIndex = i;
                         maxlen = j - i + 1;
                     }
@@ -126,9 +110,7 @@ public:
             }
         }
 
-        /*
-        Longest palindromic substring return karo
-        */
+        // Longest palindromic substring return karo
         return s.substr(startingIndex, maxlen);
     }
 };
@@ -163,54 +145,48 @@ reducing repeated computations and achieving O(n²) time complexity.”
 class Solution {
 public:
 
-    /*
-    =====================================================
-    🔹 Function: solve(s, l, r)
-    =====================================================
-    Purpose:
-    Check whether substring s[l..r] is palindrome or not
+    // =====================================================
+    // 🔹 Function: solve(s, l, r)
+    // =====================================================
+    // Purpose:
+    // Check whether substring s[l..r] is palindrome or not
 
-    Technique:
-    Two-pointer approach
-    - l pointer start se
-    - r pointer end se
-    - Dono characters compare karte hue andar ki taraf move
-    */
-    bool solve(string &s, int l, int r){
+    // Technique:
+    // Two-pointer approach
+    // - l pointer start se
+    // - r pointer end se
+    // - Dono characters compare karte hue andar ki taraf move
+    bool solve(string &s, int l, int r)
+    {
         
-        /*
-        Jab tak l <= r:
-        - characters compare karo
-        - mismatch mila toh directly false
-        */
-        while(l <= r) {
+        // Jab tak l <= r:
+        // - characters compare karo
+        // - mismatch mila toh directly false
+        while(l <= r) 
+        {
 
             // Agar dono ends ke characters different hain
             // toh palindrome possible nahi
-            if(s[l] != s[r])
-                return false;
+            if(s[l] != s[r]) return false;
 
             // Move pointers towards center
             l++;
             r--;
         }
         
-        /*
-        Agar loop poora chal gaya
-        aur koi mismatch nahi mila
-        toh substring palindrome hai
-        */
+        // Agar loop poora chal gaya
+        // aur koi mismatch nahi mila
+        // toh substring palindrome hai
         return true;
     }
     
-    /*
-    =====================================================
-    🔹 Function: longestPalindrome
-    =====================================================
-    Har possible substring check karke
-    longest palindromic substring return karta hai
-    */
-    string longestPalindrome(string s) {
+    // =====================================================
+    // 🔹 Function: longestPalindrome
+    // =====================================================
+    // Har possible substring check karke
+    // longest palindromic substring return karta hai
+    string longestPalindrome(string s) 
+    {
 
         int n = s.length();
 
@@ -220,28 +196,26 @@ public:
         // startingIndex → longest palindrome ka start index
         int startingIndex = 0;
 
-        /*
-        =====================================================
-        🔹 Generate all possible substrings
-        =====================================================
-        i → start index
-        j → end index
-        */
-        for(int i = 0; i < n; i++){
-            for(int j = i; j < n; j++){
+        // =====================================================
+        // 🔹 Generate all possible substrings
+        // =====================================================
+        // i → start index
+        // j → end index
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = i; j < n; j++)
+            {
                 
-                /*
-                Check karo:
-                kya s[i..j] palindrome hai?
-                */
-                if(solve(s, i, j)) {
+                // Check karo:
+                // kya s[i..j] palindrome hai?
+                if(solve(s, i, j)) 
+                {
 
-                    /*
-                    Agar palindrome hai
-                    aur length ab tak ke max se zyada hai
-                    toh update karo
-                    */
-                    if(j - i + 1 > maxlen){
+                    // Agar palindrome hai
+                    // aur length ab tak ke max se zyada hai
+                    // toh update karo
+                    if(j - i + 1 > maxlen)
+                    {
                         startingIndex = i;
                         maxlen = j - i + 1;
                     }
@@ -249,9 +223,7 @@ public:
             }
         }
 
-        /*
-        Longest palindromic substring return karo
-        */
+        // Longest palindromic substring return karo
         return s.substr(startingIndex, maxlen);
     }
 };
