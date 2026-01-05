@@ -4,49 +4,33 @@ https://www.geeksforgeeks.org/problems/box-stacking/1
 class Solution {
 public:
 
-    /*
-    dp[i] = Maximum height of stack
-            where box[i] is at the TOP
-    */
+    // dp[i] = Maximum height of stack where box[i] is at the TOP
     int dp[1001];
 
-    /*
-    =====================================================
-    🔹 Recursive + Memo function
-    =====================================================
-    idx → current box ko top maan ke max height nikalna
-    box → all rotated boxes list
-    */
+    // =====================================================
+    // 🔹 Recursive + Memo function
+    // =====================================================
+    // idx → current box ko top maan ke max height nikalna
+    // box → all rotated boxes list
     int fun(int idx, vector<vector<int>>& box)
     {
         // Agar pehle se calculate ho chuka hai
-        if (dp[idx] != -1) 
-            return dp[idx];
+        if (dp[idx] != -1) return dp[idx];
 
-        /*
-        Minimum height:
-        Agar koi box niche na lage
-        toh sirf current box ki height
-        */
+        // Minimum height:
+        // Agar koi box niche na lage
+        // toh sirf current box ki height
         int ans = box[idx][2];  // height of current box
 
-        /*
-        Ab sab boxes check karo jo
-        current box ke niche aa sakte hain
-        */
+        // Ab sab boxes check karo jo
+        // current box ke niche aa sakte hain
         for (int j = 0; j < idx; j++)
         {
-            /*
-            Condition:
-            niche wala box base me strictly chhota hona chahiye
-            */
-            if (box[j][0] < box[idx][0] &&
-                box[j][1] < box[idx][1])
+            // Condition:
+            // niche wala box base me strictly chhota hona chahiye
+            if (box[j][0] < box[idx][0] && box[j][1] < box[idx][1])
             {
-                /*
-                Option:
-                current box + niche wale stack ki height
-                */
+                // Option: current box + niche wale stack ki height
                 ans = max(ans, box[idx][2] + fun(j, box));
             }
         }
@@ -55,70 +39,49 @@ public:
         return dp[idx] = ans;
     }
 
-    /*
-    =====================================================
-    🔹 Main Function
-    =====================================================
-    */
-    int maxHeight(vector<int> &height,
-                  vector<int> &width,
-                  vector<int> &length) {
+    // =====================================================
+    // 🔹 Main Function
+    // =====================================================
+    int maxHeight(vector<int> &height,vector<int> &width,vector<int> &length) 
+    {
 
         int n = height.size();
         vector<vector<int>> box;
 
-        /*
-        =====================================================
-        🔹 Step 1: Generate all rotations
-        =====================================================
+        // =====================================================
+        // 🔹 Step 1: Generate all rotations
+        // =====================================================
 
-        Har box ke 3 unique rotations hote hain
-        (height fix, base change)
+        // Har box ke 3 unique rotations hote hain
+        // (height fix, base change)
 
-        Base ko hum hamesha:
-        max(base1, base2), min(base1, base2)
-        me store karte hain
-        taaki comparison easy ho
-        */
+        // Base ko hum hamesha:
+        // max(base1, base2), min(base1, base2)
+        // me store karte hain
+        // taaki comparison easy ho
         for (int i = 0; i < n; i++)
         {
-            box.push_back({
-                max(height[i], width[i]),
-                min(height[i], width[i]),
-                length[i]
-            });
+            box.push_back({max(height[i], width[i]),min(height[i], width[i]),length[i]});
 
-            box.push_back({
-                max(width[i], length[i]),
-                min(width[i], length[i]),
-                height[i]
-            });
+            box.push_back({max(width[i], length[i]),min(width[i], length[i]),height[i]});
 
-            box.push_back({
-                max(height[i], length[i]),
-                min(height[i], length[i]),
-                width[i]
-            });
+            box.push_back({max(height[i], length[i]),min(height[i], length[i]),width[i]});
         }
 
-        /*
-        =====================================================
-        🔹 Step 2: Sort boxes
-        =====================================================
+        // =====================================================
+        // 🔹 Step 2: Sort boxes
+        // =====================================================
 
-        Sorting by base dimensions
-        taaki DP LIS-style kaam kare
-        */
+        // Sorting by base dimensions
+        // taaki DP LIS-style kaam kare
         sort(box.begin(), box.end());
 
         // DP array initialize
         memset(dp, -1, sizeof(dp));
 
-        /*
-        =====================================================
-        🔹 Step 3: Har box ko top maan ke answer nikalo
-        =====================================================
-        */
+        // =====================================================
+        // 🔹 Step 3: Har box ko top maan ke answer nikalo
+        // =====================================================
         int ans = 0;
         for (int i = 0; i < box.size(); i++)
         {
@@ -163,114 +126,92 @@ DP is used to find the maximum stack height with strict base constraints.”
 
 class Solution {
 public:
-    int maxHeight(vector<int> &height,
-                  vector<int> &width,
-                  vector<int> &length) {
+    int maxHeight(vector<int> &height,vector<int> &width,vector<int> &length) 
+    {
 
         int n = height.size();
         vector<vector<int>> box;
 
-        /*
-        =====================================================
-        🔹 STEP 1: Generate all rotations
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 1: Generate all rotations
+        // =====================================================
 
-        Har box ke 3 valid rotations
-        Base ko always (max, min) me store karte hain
-        taaki comparison consistent rahe
-        */
+        // Har box ke 3 valid rotations
+        // Base ko always (max, min) me store karte hain
+        // taaki comparison consistent rahe
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) 
+        {
 
             // Rotation 1
-            box.push_back({
-                max(height[i], width[i]),
-                min(height[i], width[i]),
-                length[i]
-            });
+            box.push_back({max(height[i], width[i]),min(height[i], width[i]),length[i]});
 
             // Rotation 2
-            box.push_back({
-                max(width[i], length[i]),
-                min(width[i], length[i]),
-                height[i]
-            });
+            box.push_back({max(width[i], length[i]),min(width[i], length[i]),height[i]});
 
             // Rotation 3
-            box.push_back({
-                max(height[i], length[i]),
-                min(height[i], length[i]),
-                width[i]
-            });
+            box.push_back({max(height[i], length[i]),min(height[i], length[i]),width[i]});
         }
 
-        /*
-        =====================================================
-        🔹 STEP 2: Sort boxes by base dimensions
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 2: Sort boxes by base dimensions
+        // =====================================================
 
-        Sorting helps in LIS-style DP
-        Smaller base pehle, bigger baad me
-        */
+        // Sorting helps in LIS-style DP
+        // Smaller base pehle, bigger baad me
 
         sort(box.begin(), box.end());
 
         int m = box.size();
 
-        /*
-        =====================================================
-        🔹 STEP 3: DP array initialization
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 3: DP array initialization
+        // =====================================================
 
-        dp[i] = box[i] ki height
-        (minimum height = khud ka height)
-        */
+        // dp[i] = box[i] ki height
+        // (minimum height = khud ka height)
 
         vector<int> dp(m);
 
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++) 
+        {
             dp[i] = box[i][2];  // height
         }
 
-        /*
-        =====================================================
-        🔹 STEP 4: LIS-style DP calculation
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 4: LIS-style DP calculation
+        // =====================================================
 
-        For every box i (top box)
-        check all boxes j < i
-        jo niche aa sakte hain
-        */
+        // For every box i (top box)
+        // check all boxes j < i
+        // jo niche aa sakte hain
 
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++) 
+        {
 
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < i; j++) 
+            {
 
-                /*
-                Agar box[j] ko box[i] ke niche rakh sakte hain
-                */
-                if (box[j][0] < box[i][0] &&
-                    box[j][1] < box[i][1]) {
+                // Agar box[j] ko box[i] ke niche rakh sakte hain
+                if (box[j][0] < box[i][0] &&box[j][1] < box[i][1]) 
+                {
 
-                    /*
-                    Maximum height update:
-                    current box height + niche wale stack
-                    */
+                    // Maximum height update:
+                    // current box height + niche wale stack
                     dp[i] = max(dp[i], box[i][2] + dp[j]);
                 }
             }
         }
 
-        /*
-        =====================================================
-        🔹 STEP 5: Final Answer
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 5: Final Answer
+        // =====================================================
 
-        dp array ka maximum value hi answer hai
-        */
+        // dp array ka maximum value hi answer hai
 
         int ans = 0;
-        for (int i = 0; i < m; i++) {
+        for (int i = 0; i < m; i++) 
+        {
             ans = max(ans, dp[i]);
         }
 
