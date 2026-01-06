@@ -81,13 +81,13 @@ class Solution {
 public:
     int n;
     
-    int rob(vector<int>& nums) {
+    int rob(vector<int>& nums) 
+    {
         
         n = nums.size();
         
         // Base case: Agar sirf 1 house hai, usko hi rob karo
-        if(n == 1)
-            return nums[0];
+        if(n == 1) return nums[0];
         
         // Bottom-up DP table
         // t[i] = first 'i' houses se maximum paisa kitna rob kar sakte hain
@@ -108,15 +108,13 @@ public:
         
         t[0] = 0;  // 0 houses -> 0 paisa
         
-        for(int i = 1; i <= n-1; i++) {  
+        for(int i = 1; i <= n-1; i++) 
+        {  
             // 'i' means first 'i' houses from nums[0 ... i-1]
             
             // Option 1: Skip current house → t[i-1]
             // Option 2: Take current house (nums[i-1]) → t[i-2] + nums[i-1]
-            t[i] = max(
-                t[i-1],
-                nums[i-1] + ((i-2 >= 0) ? t[i-2] : 0)
-            );
+            t[i] = max(t[i-1],nums[i-1] + ((i-2 >= 0) ? t[i-2] : 0));
         }
         
         // Case-1 ka result = t[n-1], kyunki hum last house (n-1) ko use nahi kar rahe
@@ -141,17 +139,15 @@ public:
         t[0] = 0; // no houses
         t[1] = 0; // hum first house (nums[0]) ko intentionally skip kar rahe
         
-        for(int i = 2; i <= n; i++) {
+        for(int i = 2; i <= n; i++) 
+        {
             // Now DP maps:
             // t[2] -> nums[1]
             // t[3] -> nums[2]
             // ...
             // t[n] -> nums[n-1]
             
-            t[i] = max(
-                t[i-1],
-                nums[i-1] + t[i-2]
-            );
+            t[i] = max(t[i-1],nums[i-1] + t[i-2]);
         }
         
         // Case-2 ka final answer = t[n]
@@ -201,13 +197,15 @@ public:
     //
     // phir max(skip, take) ko next iteration ka prev banate hain.
     // ----------------------------------------------------------
-    int solve(vector<int>& nums, int l, int r) {
+    int solve(vector<int>& nums, int l, int r) 
+    {
         
         int prevPrev = 0;  // dp[i-2]
         int prev = 0;      // dp[i-1]
         
         // Pure range ko iterate karte hain
-        for(int i = l; i <= r; i++) {
+        for(int i = l; i <= r; i++) 
+        {
             
             // OPTION 1: current house skip (same as dp[i-1])
             int skip = prev;
@@ -230,16 +228,15 @@ public:
         return prev;
     }
     
-    int rob(vector<int>& nums) {
+    int rob(vector<int>& nums) 
+    {
 
         int n = nums.size();
 
         // Special cases (circular but small length)
-        if(n == 1)
-            return nums[0];
+        if(n == 1) return nums[0];
         
-        if(n == 2)
-            return max(nums[0], nums[1]);
+        if(n == 2) return max(nums[0], nums[1]);
         
         // ----------------------------------------------------------
         // Case-1:
