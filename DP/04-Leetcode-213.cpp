@@ -4,17 +4,16 @@ public:
     int t[101]; // DP array (memo table) - har index ka best answer store karta hai
 
     // Recursion function: i = current index, n = last allowed index
-    int solve(vector<int>& nums, int i, int n) {
+    int solve(vector<int>& nums, int i, int n) 
+    {
         
         // BASE CASE: Agar index last allowed index se aage chala gaya,
         // to kuch bhi rob nahi kar sakte → return 0
-        if(i > n)
-            return 0;
+        if(i > n) return 0;
         
         // Agar iss index ka answer pehle se calculated hai,
         // to directly memo table se return kar do
-        if(t[i] != -1)
-            return t[i];
+        if(t[i] != -1) return t[i];
         
         // OPTION-1: Take/Rob the current house (nums[i])
         // Agar isko rob karenge to next hum i+2 wale house par hi ja sakte
@@ -28,16 +27,15 @@ public:
         return t[i] = max(take, skip);
     }
     
-    int rob(vector<int>& nums) {
+    int rob(vector<int>& nums) 
+    {
         int n = nums.size();
         
         // Special case: Agar sirf 1 house hai, usi ko rob karo
-        if(n == 1)
-            return nums[0];
+        if(n == 1) return nums[0];
         
         // Agar 2 houses hain, to dono adjacent hain (circular nahi samjho)
-        if(n == 2)
-            return max(nums[0], nums[1]);
+        if(n == 2) return max(nums[0], nums[1]);
         
         // ---------------------------------------------
         // IMPORTANT: House Robber II is circular.
