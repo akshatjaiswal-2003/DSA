@@ -73,7 +73,8 @@ public:
 
 class Solution {
 public:
-    long long maxAlternatingSum(vector<int>& nums) {
+    long long maxAlternatingSum(vector<int>& nums) 
+    {
         int n = nums.size();
         
         // DP table: n rows × 2 columns
