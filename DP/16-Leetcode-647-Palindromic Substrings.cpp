@@ -438,162 +438,146 @@ outward while characters match."
 
 class Solution {
 public:
-    string longestPalindrome(string s) {
+    string longestPalindrome(string s) 
+    {
 
-        /*
-        =====================================================
-        🔹 STEP 1: STRING TRANSFORMATION
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 1: STRING TRANSFORMATION
+        // =====================================================
 
-        Original string me:
-        - Odd length palindrome: "aba"
-        - Even length palindrome: "abba"
+        // Original string me:
+        // - Odd length palindrome: "aba"
+        // - Even length palindrome: "abba"
 
-        Dono ko uniformly handle karna mushkil hota hai
+        // Dono ko uniformly handle karna mushkil hota hai
 
-        👉 Trick:
-        Har character ke beech '#' daal do
-        Start me '^' aur end me '$' add karo
-        (ye boundaries ke liye hote hain, out of bound avoid)
+        // 👉 Trick:
+        // Har character ke beech '#' daal do
+        // Start me '^' aur end me '$' add karo
+        // (ye boundaries ke liye hote hain, out of bound avoid)
 
-        Example:
-        s = "abba"
+        // Example:
+        // s = "abba"
 
-        Transformed string t:
-        "^#a#b#b#a#$"
+        // Transformed string t:
+        // "^#a#b#b#a#$"
 
-        Ab:
-        ✔ Har palindrome odd length ka ho gaya
-        ✔ Center-based expansion easy ho gayi
-        */
+        // Ab:
+        // ✔ Har palindrome odd length ka ho gaya
+        // ✔ Center-based expansion easy ho gayi
 
         string t = "^";
-        for(char c : s) {
+        for(char c : s) 
+        {
             t += "#";   // separator
             t += c;     // original character
         }
         t += "#$";      // ending boundary
 
-        /*
-        =====================================================
-        🔹 STEP 2: PALINDROME RADIUS ARRAY
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 2: PALINDROME RADIUS ARRAY
+        // =====================================================
 
-        P[i] = length of palindrome centered at index i in transformed string
+        // P[i] = length of palindrome centered at index i in transformed string
 
-        Agar P[i] = 3
-        ⇒ means i ke left aur right 3 characters tak palindrome hai
-        */
+        // Agar P[i] = 3
+        // ⇒ means i ke left aur right 3 characters tak palindrome hai
 
         int n = t.length();
         vector<int> P(n, 0);
 
-        /*
-        =====================================================
-        🔹 STEP 3: CENTER & RIGHT POINTERS
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 3: CENTER & RIGHT POINTERS
+        // =====================================================
 
-        center → center of the current right-most palindrome
-        right  → right boundary (end) of that palindrome
+        // center → center of the current right-most palindrome
+        // right  → right boundary (end) of that palindrome
 
-        Ye dono help karte hain:
-        ✔ previous palindromes ka use karne me
-        ✔ repeated comparisons avoid karne me
-        */
+        // Ye dono help karte hain:
+        // ✔ previous palindromes ka use karne me
+        // ✔ repeated comparisons avoid karne me
 
         int center = 0, right = 0;
 
-        /*
-        =====================================================
-        🔹 STEP 4: MAIN MANACHER LOOP
-        =====================================================
-        i = current center jaha palindrome check karna hai
-        */
+        // =====================================================
+        // 🔹 STEP 4: MAIN MANACHER LOOP
+        // =====================================================
+        // i = current center jaha palindrome check karna hai
 
-        for(int i = 1; i < n-1; i++) {
+        for(int i = 1; i < n-1; i++) 
+        {
 
-            /*
-            🔹 Mirror index calculation
+            // 🔹 Mirror index calculation
 
-            mirror = 2*center - i
+            // mirror = 2*center - i
 
-            Idea:
-            Agar i right boundary ke andar hai,
-            toh uska mirror bhi pehle compute ho chuka hoga
-            */
+            // Idea:
+            // Agar i right boundary ke andar hai,
+            // toh uska mirror bhi pehle compute ho chuka hoga
 
             int mirror = 2*center - i;
 
-            /*
-            🔹 Case 1: i < right
-            Matlab:
-            i kisi pehle se known palindrome ke andar hai
+            // 🔹 Case 1: i < right
+            // Matlab:
+            // i kisi pehle se known palindrome ke andar hai
 
-            Toh hum direct mirror ka result reuse kar sakte hain
-            */
+            // Toh hum direct mirror ka result reuse kar sakte hain
 
-            if(i < right)
-                P[i] = min(right - i, P[mirror]);
+            if(i < right) P[i] = min(right - i, P[mirror]);
 
-            /*
-            🔹 Case 2: Expand around i
+            // 🔹 Case 2: Expand around i
 
-            Ab manually check karte hain
-            ki i ke left aur right characters equal hain ya nahi
+            // Ab manually check karte hain
+            // ki i ke left aur right characters equal hain ya nahi
 
-            Jab tak equal hain:
-            palindrome expand hota rahega
-            */
+            // Jab tak equal hain:
+            // palindrome expand hota rahega
 
-            while(t[i + 1 + P[i]] == t[i - 1 - P[i]])
-                P[i]++;
+            while(t[i + 1 + P[i]] == t[i - 1 - P[i]]) P[i]++;
 
-            /*
-            🔹 Agar naya palindrome right boundary se aage nikal gaya
-            toh:
-            - center update
-            - right update
-            */
+            // 🔹 Agar naya palindrome right boundary se aage nikal gaya
+            // toh:
+            // - center update
+            // - right update
 
-            if(i + P[i] > right) {
+            if(i + P[i] > right) 
+            {
                 center = i;
                 right  = i + P[i];
             }
         }
 
-        /*
-        =====================================================
-        🔹 STEP 5: LONGEST PALINDROME FIND KARNA
-        =====================================================
-        P array me maximum value dhundo
-        */
+        // =====================================================
+        // 🔹 STEP 5: LONGEST PALINDROME FIND KARNA
+        // =====================================================
+        // P array me maximum value dhundo
 
         int maxLen = 0;
         int centerIndex = 0;
 
-        for(int i = 1; i < n-1; i++) {
-            if(P[i] > maxLen) {
+        for(int i = 1; i < n-1; i++) 
+        {
+            if(P[i] > maxLen) 
+            {
                 maxLen = P[i];
                 centerIndex = i;
             }
         }
 
-        /*
-        =====================================================
-        🔹 STEP 6: ORIGINAL STRING ME CONVERT KARNA
-        =====================================================
+        // =====================================================
+        // 🔹 STEP 6: ORIGINAL STRING ME CONVERT KARNA
+        // =====================================================
 
-        Formula:
-        start index in original string =
-        (centerIndex - maxLen) / 2
+        // Formula:
+        // start index in original string =
+        // (centerIndex - maxLen) / 2
 
-        Kyunki:
-        - '#' characters add hue the
-        - Har original character ke pehle ek '#'
+        // Kyunki:
+        // - '#' characters add hue the
+        // - Har original character ke pehle ek '#'
 
-        Example:
-        Transformed index → Original index mapping
-        */
+        // Example:
+        // Transformed index → Original index mapping
 
         int start = (centerIndex - maxLen) / 2;
 
