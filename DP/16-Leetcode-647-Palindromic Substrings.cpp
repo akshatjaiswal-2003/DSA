@@ -330,52 +330,47 @@ Total palindromes are counted while building the DP table."
 // Time Complexity  : O(n^2)
 // Space Complexity : O(1)
 
-/*
-    🔹 Problem:
-    Count all palindromic substrings in a given string.
+//     🔹 Problem:
+//     Count all palindromic substrings in a given string.
 
-    🔹 Key Observation:
-    Har palindrome ka ek CENTER hota hai.
+//     🔹 Key Observation:
+//     Har palindrome ka ek CENTER hota hai.
 
-    🔹 Types of Palindromes:
-    1️⃣ Odd length palindrome
-        Example: "aba", "racecar"
-        → Center ek single character hota hai
+//     🔹 Types of Palindromes:
+//     1️⃣ Odd length palindrome
+//         Example: "aba", "racecar"
+//         → Center ek single character hota hai
 
-    2️⃣ Even length palindrome
-        Example: "aa", "abba"
-        → Center do characters ke beech hota hai
+//     2️⃣ Even length palindrome
+//         Example: "aa", "abba"
+//         → Center do characters ke beech hota hai
 
-    🔹 Strategy:
-    Har index ko center maan kar
-    - left aur right side me expand karte jao
-    - jab tak characters match karte rahein
-*/
+//     🔹 Strategy:
+//     Har index ko center maan kar
+//     - left aur right side me expand karte jao
+//     - jab tak characters match karte rahein
 
 class Solution {
 public:
     int count = 0; // Global counter to store total palindromic substrings
 
-    /*
-        🔹 check() function
-        i  → left pointer
-        j  → right pointer
-        n  → length of string
+    //     🔹 check() function
+    //     i  → left pointer
+    //     j  → right pointer
+    //     n  → length of string
 
-        Ye function "center se bahar ki taraf expand" karta hai
-        aur har valid palindrome ko count karta hai
-    */
+    //     Ye function "center se bahar ki taraf expand" karta hai
+    //     aur har valid palindrome ko count karta hai
     void check(string& s, int i, int j, int n) {
 
-        /*
-            🔹 Jab tak:
-            - left pointer valid ho
-            - right pointer valid ho
-            - dono characters equal ho
+        //     🔹 Jab tak:
+        //     - left pointer valid ho
+        //     - right pointer valid ho
+        //     - dono characters equal ho
 
-            Tab tak substring s[i...j] palindrome rahega
-        */
-        while(i >= 0 && j < n && s[i] == s[j]) {
+        //     Tab tak substring s[i...j] palindrome rahega
+        while(i >= 0 && j < n && s[i] == s[j]) 
+        {
 
             // 🔥 Ek valid palindrome mil gaya
             count++;
@@ -386,25 +381,25 @@ public:
         }
     }
 
-    int countSubstrings(string s) {
+    int countSubstrings(string s) 
+    {
 
         int n = s.length();
         count = 0; // Reset count for each test case
 
-        /*
-            🔹 Main Idea:
-            Har index i ko palindrome ka center maano
+        //     🔹 Main Idea:
+        //     Har index i ko palindrome ka center maano
 
-            For each i:
-            1️⃣ Odd length palindrome:
-                Center at s[i]
-                check(s, i, i)
+        //     For each i:
+        //     1️⃣ Odd length palindrome:
+        //         Center at s[i]
+        //         check(s, i, i)
 
-            2️⃣ Even length palindrome:
-                Center between s[i] and s[i+1]
-                check(s, i, i+1)
-        */
-        for(int i = 0; i < n; i++) {
+        //     2️⃣ Even length palindrome:
+        //         Center between s[i] and s[i+1]
+        //         check(s, i, i+1)
+        for(int i = 0; i < n; i++) 
+        {
 
             // 🔹 Odd length palindromes
             // Example: "aba"
