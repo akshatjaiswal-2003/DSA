@@ -361,7 +361,8 @@ public:
 
     //     Ye function "center se bahar ki taraf expand" karta hai
     //     aur har valid palindrome ko count karta hai
-    void check(string& s, int i, int j, int n) {
+    void check(string& s, int i, int j, int n) 
+    {
 
         //     🔹 Jab tak:
         //     - left pointer valid ho
