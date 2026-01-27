@@ -1,6 +1,7 @@
 class Solution {
 public:
-    void deleteNode(ListNode* node) {
+    void deleteNode(ListNode* node) 
+    {
 
         // ⚠️ IMPORTANT:
         // Hume yaha sirf wahi node diya gaya hai jise delete karna hai
