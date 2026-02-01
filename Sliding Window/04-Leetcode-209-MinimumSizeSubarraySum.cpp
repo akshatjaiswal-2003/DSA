@@ -1,6 +1,7 @@
 class Solution {
 public:
-    int minSubArrayLen(int target, vector<int>& nums) {
+    int minSubArrayLen(int target, vector<int>& nums) 
+    {
 
         // i = left pointer (window ka start)
         // j = right pointer (window ka end)
@@ -44,11 +45,10 @@ public:
 
         // Agar ans abhi bhi INT_MAX hai
         // matlab koi subarray mila hi nahi jiska sum >= target ho
-        if(ans == INT_MAX) 
-            return 0;
+        if(ans == INT_MAX) return 0;
 
         // Warna minimum length return karo
-        return ans;
+        else return ans;
     }
 };
 
