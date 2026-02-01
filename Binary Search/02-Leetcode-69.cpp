@@ -65,3 +65,10 @@ public:
 ⏱ Time & Space Complexity
 	•	Time Complexity: O(log x)
 	•	Space Complexity: O(1)
+
+
+🎤 Interview Me Kaise Explain Kare
+
+“I applied binary search on the range [0, x].
+If mid² is less than x, I move right; otherwise, left.
+When the loop ends, high stores the integer square root.”
