@@ -173,4 +173,4 @@ public:
 
 “Preorder ka first element root hota hai,
 inorder root ke around left/right subtree batata hai,
-aur hashmap se hum tree ko O(N) me build kar sakte hain.”
+aur hashmap se hum tree ko O(N) me build kar sakte hain”
