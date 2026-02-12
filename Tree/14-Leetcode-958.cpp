@@ -77,3 +77,72 @@ Har node ek baar visit ho raha hai.
 
 O(N)
 Queue me worst case me ek full level store ho sakta hai.
+
+
+
+
+--------------------------------DFS approach----------------------------------
+
+
+class Solution {
+public:
+
+    // 🔢 Step 1: Total nodes count karne ka function
+    // Simple DFS traversal se har node count karenge
+    int count(TreeNode* root)
+    {
+        // 🛑 Base case: agar node NULL hai
+        if(root == NULL) 
+            return 0;
+
+        // 📦 Current node (1) + left subtree + right subtree
+        return 1 + count(root->left) + count(root->right);
+    }
+
+
+    // 🔁 Step 2: DFS with index checking
+    // i = current node ka index (heap style)
+    // totalNodes = total nodes in tree
+    bool dfs(TreeNode* root, int i, int totalNodes)
+    {
+        // 🛑 Agar node NULL hai
+        // NULL hona allowed hai, isliye true return karte hain
+        if(root == NULL) 
+            return true;
+
+        // ❌ Agar kisi node ka index totalNodes se bada ho gaya
+        // matlab beech me gap hai → not complete
+        if(i > totalNodes) 
+            return false;
+
+        // 🌳 Recursively left aur right subtree check karenge
+        // Left child ka index = 2*i
+        // Right child ka index = 2*i + 1
+
+        return dfs(root->left, 2*i, totalNodes) &&
+               dfs(root->right, 2*i + 1, totalNodes);
+    }
+
+
+    // 🚀 Main function
+    bool isCompleteTree(TreeNode* root) {
+
+        // 🔢 Pehle total nodes count karo
+        int totalNodes = count(root);
+
+        // 🔎 Ab DFS start karo root index = 1 se
+        return dfs(root, 1, totalNodes);
+    }
+};
+
+
+
+⏱ Time Complexity
+	1.	count() → O(N)
+	2.	dfs() → O(N)
+
+Total → O(N)
+
+📦 Space Complexity
+
+Recursive stack → worst case skewed tree → O(N)
