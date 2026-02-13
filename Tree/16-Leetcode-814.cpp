@@ -75,3 +75,35 @@ Worst case:
 Har node ke liye subtree traverse
 
 👉 O(N²)
+
+
+
+
+
+----------------------Optimized-------------------------
+
+class Solution {
+public:
+    TreeNode* pruneTree(TreeNode* root) {
+        if(root == NULL) 
+            return NULL;
+
+        // Pehle children prune karo
+        root->left = pruneTree(root->left);
+        root->right = pruneTree(root->right);
+
+        // Agar:
+        // - current value 0
+        // - left NULL
+        // - right NULL
+        // To delete this node
+        if(root->val == 0 && root->left == NULL && root->right == NULL)
+            return NULL;
+
+        return root;
+    }
+};
+
+
+
+tc = O(n)
