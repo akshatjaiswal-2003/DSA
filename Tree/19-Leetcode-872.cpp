@@ -66,6 +66,4 @@ public:
 	•	Tree1 → O(N)
 	•	Tree2 → O(M)
 
-Total:
-
-👉 O(N + M)
+Total : O(N + M)
