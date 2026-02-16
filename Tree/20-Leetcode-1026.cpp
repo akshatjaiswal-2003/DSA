@@ -91,3 +91,45 @@ Worst case (skewed tree):
 	•	Next → N-2
 
 👉 Time Complexity = O(N²) ❌
+
+
+
+
+
+-------------------------💎 Optimized Code (O(N))---------------------
+
+Trick:
+
+Instead of comparing every ancestor separately,
+
+👉 Root se downward jaate waqt:
+	•	Path ka minimum value track karo
+	•	Path ka maximum value track karo
+
+Phir difference:  max - min
+
+
+
+class Solution {
+public:
+
+    int solve(TreeNode* root, int currMin, int currMax)
+    {
+        if(root == NULL)
+            return currMax - currMin;
+
+        // Update min and max on path
+        currMin = min(currMin, root->val);
+        currMax = max(currMax, root->val);
+
+        // Explore both subtrees
+        int left = solve(root->left, currMin, currMax);
+        int right = solve(root->right, currMin, currMax);
+
+        return max(left, right);
+    }
+
+    int maxAncestorDiff(TreeNode* root) {
+        return solve(root, root->val, root->val);
+    }
+};
